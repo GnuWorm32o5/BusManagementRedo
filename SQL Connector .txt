@@ -1,0 +1,15 @@
+ try
+      {
+          Class.forName("com.mysql.jdbc.Driver");
+          Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/busmanagement","root","");
+          String insertQuery="insert into user_details('','"+firstname+"','"+lastname+"','"+username+"','"+password+"','"+email+"','"+weburl+"')";
+          Statement stat = con.createStatement();
+          int x = stat.executeUpdate(insertQuery);
+          System.out.print(x);
+      }     
+      
+      
+      catch(Exception e)
+              {
+                System.out.println();
+             }
