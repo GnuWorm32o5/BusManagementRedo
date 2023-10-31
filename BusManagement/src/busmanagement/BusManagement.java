@@ -17,7 +17,9 @@ public class BusManagement {
      */
     public static void main(String[] args) {
         MainScreen ms = new MainScreen();
+        ms.setLocationRelativeTo(null);
         ms.setVisible(true);
+        ms.setLocationRelativeTo(ms);
         
         
         
