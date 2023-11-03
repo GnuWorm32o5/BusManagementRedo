@@ -39,16 +39,16 @@ public class UserControlPanel extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(233, 233, 233)
+                .addGap(297, 297, 297)
                 .addComponent(jLabel1)
-                .addContainerGap(367, Short.MAX_VALUE))
+                .addContainerGap(303, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(105, 105, 105)
+                .addGap(102, 102, 102)
                 .addComponent(jLabel1)
-                .addContainerGap(363, Short.MAX_VALUE))
+                .addContainerGap(366, Short.MAX_VALUE))
         );
 
         pack();
