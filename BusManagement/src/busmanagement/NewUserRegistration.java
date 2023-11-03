@@ -207,25 +207,24 @@ public class NewUserRegistration extends javax.swing.JFrame {
     }//GEN-LAST:event_emailtfActionPerformed
   
     private void registerBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registerBtnActionPerformed
-
+      dispose();
       String firstname = firstnametf.getText();
       String lastname = lastnametf.getText();
       String username = usernametf.getText();
       String password = passwordtf.getText();
-      String email = emailtf.getText();
-      String weburl = weburltf.getText();
+      String email_id = emailtf.getText();
+      String web_url = weburltf.getText();
       
       try
       {
-          Class.forName("com.mysql.jdbc.Driver");
-          String databaseURL="jdbc:mysql://localhost:3306/busmanagement";
+          Class.forName("com.mysql.cj.jdbc.Driver");
+          String databaseURL = "jdbc:mysql://localhost:3306/busmanagement";
           Connection con = DriverManager.getConnection(databaseURL,"root","");
-          String insertQuery="insert into user_details values(null,'"+firstname+"','"+lastname+"','"+username+"','"+password+"','"+email+"','"+weburl+"')";
+          String insertQuery="insert into user_details values(null,'"+firstname+"','"+lastname+"','"+username+"','"+password+"','"+email_id+"','"+web_url+"')";
           Statement stat = con.createStatement();
           int x = stat.executeUpdate(insertQuery);
           System.out.print(x);
-          infoMessage("Uspešno ste kreirali nalog!","Obaveštenje");
-      }     
+        }     
       
       
       catch(Exception e)
