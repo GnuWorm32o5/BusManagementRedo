@@ -224,6 +224,9 @@ public class NewUserRegistration extends javax.swing.JFrame {
           Statement stat = con.createStatement();
           int x = stat.executeUpdate(insertQuery);
           System.out.print(x);
+          if(x==1) {
+              infoMessage("You have successfully registered your user account on the bus management system.","Succes");
+          }
         }     
       
       
@@ -232,9 +235,7 @@ public class NewUserRegistration extends javax.swing.JFrame {
                 System.out.println();
              }
       
-      Registered re = new Registered();
-      re.setLocationRelativeTo(null);
-      re.setVisible(true);
+    
     }//GEN-LAST:event_registerBtnActionPerformed
 
     /**

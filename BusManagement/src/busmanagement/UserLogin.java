@@ -10,6 +10,9 @@
 **/
  package busmanagement;
 
+import java.sql.Connection;
+import java.sql.Statement;
+
 public class UserLogin extends javax.swing.JFrame {
 
     /**
@@ -47,6 +50,11 @@ public class UserLogin extends javax.swing.JFrame {
         jButton1.setText("Clear");
 
         jButton2.setText("Login");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jButton3.setText("Register");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
@@ -138,6 +146,25 @@ public class UserLogin extends javax.swing.JFrame {
       ur.setLocationRelativeTo(null);
       ur.setVisible(true);
     }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+      try
+      {
+          Class.forName("com.mysql.cj.jdbc.Driver");
+          String databaseURL = "jdbc:mysql://localhost:3306/busmanagement";
+          Connection con = java.sql.DriverManager.getConnection(databaseURL,"root","");
+          String selectQuery="select * from user_details where username="+username+"' and password ='"+password+"';
+          Statement stat = con.createStatement();
+          Resultset rs=stat.executeQuery(selectQuery);
+          if(rs.next) {
+            infoMessage("Welcome","Welcome");
+            dispose();
+            UserControlPanel ucp = new UserControlPanel();
+            ucp.setVisible(true);
+            ucp.setLocationRelativeTo(null);
+          }
+       
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
