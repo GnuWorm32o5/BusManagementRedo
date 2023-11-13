@@ -2,7 +2,14 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
+
 package busmanagement;
+import java.awt.event.KeyEvent;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.Statement;
+import javax.swing.JOptionPane;
+import java.sql.ResultSet;
 
 /**
  *
@@ -32,8 +39,8 @@ public class AdminLogin extends javax.swing.JFrame {
         jButton3 = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
+        usernametf = new javax.swing.JTextField();
+        passwordtf = new javax.swing.JPasswordField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Admin Login");
@@ -42,8 +49,18 @@ public class AdminLogin extends javax.swing.JFrame {
         jLabel1.setText("Admin Login");
 
         jButton1.setText("Clear");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jButton2.setText("Login");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jButton3.setText("User Login");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
@@ -55,8 +72,6 @@ public class AdminLogin extends javax.swing.JFrame {
         jLabel2.setText("Username");
 
         jLabel3.setText("Pasword");
-
-        jTextField2.setToolTipText("");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -79,8 +94,8 @@ public class AdminLogin extends javax.swing.JFrame {
                                 .addComponent(jButton2)
                                 .addGap(49, 49, 49)
                                 .addComponent(jButton3))
-                            .addComponent(jTextField2)
-                            .addComponent(jTextField1))))
+                            .addComponent(usernametf)
+                            .addComponent(passwordtf))))
                 .addContainerGap(130, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -91,11 +106,11 @@ public class AdminLogin extends javax.swing.JFrame {
                 .addGap(38, 38, 38)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel2)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(usernametf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(57, 57, 57)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel3)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(passwordtf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 64, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
@@ -106,13 +121,56 @@ public class AdminLogin extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+      public void infoMessage (String message,String title)
+    {
+        JOptionPane.showMessageDialog(null, message, title, JOptionPane.INFORMATION_MESSAGE);
+    }
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
        dispose();
        UserLogin ul = new UserLogin();
        ul.setLocationRelativeTo(null);
        ul.setVisible(true);
     }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+       String password = passwordtf.getText();
+       String username = usernametf.getText();
+        try
+        {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            String databaseURL = "jdbc:mysql://localhost:3306/busmanagement";
+            Connection con = java.sql.DriverManager.getConnection(databaseURL, "root", "");
+            String selectQuery = "select * from admin_details where username='"+username+"' and password='"+password+"'";
+            Statement stat=con.createStatement();    
+            ResultSet rs=stat.executeQuery(selectQuery);
+            if(rs.next()){
+
+             infoMessage("Welcome administrator.", "Welcome system administrator");
+             dispose();
+             AdminControlPanel acp = new AdminControlPanel();
+             acp.setLocationRelativeTo(null);
+             acp.setVisible(true);
+    
+           }
+           else
+           {
+                 infoMessage("Enter a valid username and password or revert to user login.", "Please try again");
+                 
+                 
+           }
+               
+            
+        }
+        catch(Exception e)
+        {
+            
+        }
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    passwordtf.setText("");
+    usernametf.setText("");
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -156,7 +214,7 @@ public class AdminLogin extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
+    private javax.swing.JPasswordField passwordtf;
+    private javax.swing.JTextField usernametf;
     // End of variables declaration//GEN-END:variables
 }

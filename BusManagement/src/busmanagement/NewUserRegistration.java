@@ -8,6 +8,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.Statement;
 import javax.swing.JOptionPane;
+import java.sql.ResultSet;
 
 
 
@@ -72,6 +73,11 @@ public class NewUserRegistration extends javax.swing.JFrame {
         });
 
         resetBtn.setText("Clear");
+        resetBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                resetBtnActionPerformed(evt);
+            }
+        });
 
         signinBtn.setText("Already Have an Account? Sign In");
         signinBtn.addActionListener(new java.awt.event.ActionListener() {
@@ -220,13 +226,33 @@ public class NewUserRegistration extends javax.swing.JFrame {
           Class.forName("com.mysql.cj.jdbc.Driver");
           String databaseURL = "jdbc:mysql://localhost:3306/busmanagement";
           Connection con = DriverManager.getConnection(databaseURL,"root","");
-          String insertQuery="insert into user_details values(null,'"+firstname+"','"+lastname+"','"+username+"','"+password+"','"+email_id+"','"+web_url+"')";
           Statement stat = con.createStatement();
+          String selectQuery = "select count(*) from user_details where username='"+username+"' and password='"+password+"'";
+          ResultSet rs = stat.executeQuery(selectQuery);
+          
+          if(rs.next())
+          {
+           infoMessage("You have already registered an account before.","Existing account");
+           UserLogin ul = new UserLogin();
+           ul.setVisible(true);
+           ul.setLocationRelativeTo(null);
+ 
+          }
+          else 
+          { 
+              String insertQuery="insert into user_details values(null,'"+firstname+"','"+lastname+"','"+username+"','"+password+"','"+email_id+"','"+web_url+"')";
           int x = stat.executeUpdate(insertQuery);
           System.out.print(x);
           if(x==1) {
               infoMessage("You have successfully registered your user account on the bus management system.","Succes");
+              UserLogin ul = new UserLogin();
+              ul.setVisible(true);
+              ul.setLocationRelativeTo(null);
           }
+              
+          }
+          
+         
         }     
       
       
@@ -237,6 +263,15 @@ public class NewUserRegistration extends javax.swing.JFrame {
       
     
     }//GEN-LAST:event_registerBtnActionPerformed
+
+    private void resetBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_resetBtnActionPerformed
+      passwordtf.setText("");
+     usernametf.setText("");
+     firstnametf.setText("");
+     lastnametf.setText("");
+     weburltf.setText("");
+     emailtf.setText("");
+    }//GEN-LAST:event_resetBtnActionPerformed
 
     /**
      * @param args the command line arguments

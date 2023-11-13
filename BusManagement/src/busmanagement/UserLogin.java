@@ -50,6 +50,11 @@ public class UserLogin extends javax.swing.JFrame {
         jLabel1.setText("User Login");
 
         jButton1.setText("Clear");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jButton2.setText("Login");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -168,8 +173,8 @@ public class UserLogin extends javax.swing.JFrame {
           
         try
         {
-            Class.forName("com.mysql.jdbc.Driver");
-            String databaseURL = "jdbc:mysql://localhost:3306/busm";
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            String databaseURL = "jdbc:mysql://localhost:3306/busmanagement";
             Connection con = java.sql.DriverManager.getConnection(databaseURL, "root", "");
             String selectQuery = "select * from user_details where username='"+username+"' and password='"+password+"'";
             Statement stat=con.createStatement();    
@@ -185,11 +190,8 @@ public class UserLogin extends javax.swing.JFrame {
            }
            else
            {
-                 infoMessage("Create New Account", "Please create a new Account");
-                 dispose();
-                 NewUserRegistration nu=new NewUserRegistration();
-                 nu.setLocationRelativeTo(null);
-                 nu.setVisible(true);
+                 infoMessage("Enter a valid username and password or create a new user account", "Please try again");
+                 
                  
            }
                
@@ -204,6 +206,11 @@ public class UserLogin extends javax.swing.JFrame {
     private void usernametfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_usernametfActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_usernametfActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    usernametf.setText("");
+    passwordtf.setText("");
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
